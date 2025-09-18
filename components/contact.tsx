@@ -114,7 +114,7 @@ export function Contact() {
     console.log("[v0] Form submission started", formData)
 
     try {
-      const response = await fetch("/api/contact", {
+      const response = await fetch("/.netlify/functions/sendEmail", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -123,7 +123,7 @@ export function Contact() {
       })
 
       const result = await response.json()
-      console.log("[v0] API response:", result)
+      console.log("[v0] Netlify Function response:", result)
 
       if (result.success) {
         setIsSubmitted(true)
