@@ -12,7 +12,6 @@
 //       auth: {
 //         user: "chatgptt.work@gmail.com",
 //         // pass: process.env.GMAIL_APP_PASSWORD,
-//         pass: "vijj zozn kfhh mqyp",
 //       },
 //     })
 
