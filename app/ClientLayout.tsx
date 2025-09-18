@@ -15,16 +15,22 @@ export default function ClientLayout({
 }: Readonly<{
   children: React.ReactNode
 }>) {
-  const searchParams = useSearchParams()
-
   return (
     <div className={`${GeistSans.variable} ${GeistMono.variable} antialiased`}>
       <Suspense fallback={<div>Loading...</div>}>
-        <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
-          {children}
-        </ThemeProvider>
+        <ClientSearchParamsWrapper>
+          <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
+            {children}
+          </ThemeProvider>
+        </ClientSearchParamsWrapper>
       </Suspense>
       <Analytics />
     </div>
   )
+}
+
+function ClientSearchParamsWrapper({ children }: { children: React.ReactNode }) {
+  const searchParams = useSearchParams();
+  // You can use searchParams here or pass it down as needed
+  return <>{children}</>;
 }
