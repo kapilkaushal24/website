@@ -11,7 +11,8 @@ export async function POST(request: NextRequest) {
       service: "gmail",
       auth: {
         user: "chatgptt.work@gmail.com",
-        pass: process.env.GMAIL_APP_PASSWORD,
+        // pass: process.env.GMAIL_APP_PASSWORD,
+        pass: "vijj zozn kfhh mqyp",
       },
     })
 
