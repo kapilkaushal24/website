@@ -43,7 +43,7 @@ export function About() {
           <div className="relative">
             <div className="relative overflow-hidden rounded-2xl shadow-2xl">
               <img
-                src="/pic ranveer.png"
+                src="/Ranveer-AI.png"
                 alt="Ranveer Kaushal - Professional Video Editor & VFX Artist"
                 className="w-full h-[600px] object-cover"
               />
@@ -57,7 +57,7 @@ export function About() {
                   <CardContent className="p-4 text-center">
                     <div className="flex items-center justify-center mb-2 text-accent">{stat.icon}</div>
                     <div className="text-2xl font-bold text-foreground">{stat.value}</div>
-                    <div className="text-xs text-foreground">{stat.label}</div>
+                    <div className="text-xs text-muted-foreground">{stat.label}</div>
                   </CardContent>
                 </Card>
               ))}
