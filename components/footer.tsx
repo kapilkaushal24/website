@@ -7,7 +7,7 @@ const socialLinks = [
   { icon: <Instagram className="h-5 w-5" />, href: "https://www.instagram.com/ranveer.vfx", label: "Instagram" },
   { icon: <Youtube className="h-5 w-5" />, href: "https://www.youtube.com/@toggaming007", label: "YouTube" },
   { icon: <Linkedin className="h-5 w-5" />, href: "https://www.linkedin.com/in/ranveer-kaushal/", label: "LinkedIn" },
-  { icon: <Twitter className="h-5 w-5" />, href: "#", label: "Twitter" },
+  { icon: <Twitter className="h-5 w-5" />, href: "https://x.com/ranveerkaushall", label: "Twitter" },
 ]
 
 const quickLinks = [

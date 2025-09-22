@@ -60,8 +60,8 @@ const socialLinks = [
   {
     icon: <Twitter className="h-5 w-5" />,
     label: "Twitter",
-    href: "#",
-    username: "@ranveer_vfx",
+    href: "https://x.com/ranveerkaushall",
+    username: "@ranveerkaushall",
   },
 ]
 
