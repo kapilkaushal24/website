@@ -1,0 +1,50 @@
+name: Code Quality
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main, develop ]
+
+jobs:
+  code-quality:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'pnpm'
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v3
+        with:
+          version: 8
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Run ESLint with annotations
+        run: pnpm lint
+        continue-on-error: true
+
+      - name: Check code formatting
+        run: |
+          if command -v prettier &> /dev/null; then
+            pnpm prettier --check .
+          else
+            echo "Prettier not configured, skipping..."
+          fi
+        continue-on-error: true
+
+      - name: Analyze bundle size
+        run: |
+          pnpm build
+          du -sh .next
+          echo "Bundle analysis complete"
