@@ -37,7 +37,7 @@
 - **SETUP_INSTRUCTIONS.md** - Detailed setup guide
 - **.github/README.md** - Quick reference
 
-## 🔧 Setup Required (3 Steps)
+## 🔧 Setup Required (4 Steps)
 
 ### Step 1: Get Netlify Credentials
 
@@ -61,7 +61,23 @@ Name: NETLIFY_SITE_ID
 Value: <your-netlify-site-id-from-step-1>
 ```
 
-### Step 3: Push to GitHub
+### Step 3: Configure Email (IMPORTANT - Fixes Contact Form)
+
+1. Generate Gmail App Password:
+   - Go to: https://myaccount.google.com/security
+   - Enable 2-Step Verification
+   - Generate App Password for "Mail"
+   - Copy the 16-character password
+
+2. Add to Netlify:
+   - Go to Netlify → Your Site → Site configuration → Environment variables
+   - Add variable: `GMAIL_APP_PASSWORD` = (your app password)
+   - Set scopes: Production + Deploy previews
+   - Save
+
+**📖 See `EMAIL_FIX_GUIDE.md` for detailed instructions**
+
+### Step 4: Push to GitHub
 
 ```bash
 git add .
