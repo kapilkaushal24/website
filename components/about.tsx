@@ -47,7 +47,7 @@ export function About() {
                 alt="Ranveer Kaushal - Professional Video Editor & VFX Artist"
                 className="w-full h-[600px] object-cover"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
+              <div className="absolute inset-0 bg-linear-to-t from-black/20 to-transparent" />
             </div>
 
             {/* Floating Stats Cards */}

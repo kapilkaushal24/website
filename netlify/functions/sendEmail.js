@@ -1,16 +1,58 @@
 const nodemailer = require('nodemailer');
 
 exports.handler = async function(event, context) {
+  // Set CORS headers
+  const headers = {
+    'Access-Control-Allow-Origin': '*',
+    'Access-Control-Allow-Headers': 'Content-Type',
+    'Access-Control-Allow-Methods': 'POST, OPTIONS'
+  };
+
+  // Handle preflight requests
+  if (event.httpMethod === 'OPTIONS') {
+    return {
+      statusCode: 200,
+      headers,
+      body: ''
+    };
+  }
+
   if (event.httpMethod !== 'POST') {
     return {
       statusCode: 405,
-      body: 'Method Not Allowed',
+      headers,
+      body: JSON.stringify({ error: 'Method Not Allowed' })
     };
   }
 
   try {
     const data = JSON.parse(event.body || '{}');
     const { name, email, subject, message, projectType, budget, timeline } = data;
+
+    // Validate required fields
+    if (!name || !email || !message || !projectType) {
+      return {
+        statusCode: 400,
+        headers,
+        body: JSON.stringify({ 
+          success: false, 
+          message: 'Missing required fields' 
+        })
+      };
+    }
+
+    // Validate email format
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      return {
+        statusCode: 400,
+        headers,
+        body: JSON.stringify({ 
+          success: false, 
+          message: 'Invalid email address' 
+        })
+      };
+    }
 
     const transporter = nodemailer.createTransport({
       host: 'smtp.gmail.com',
@@ -69,20 +111,34 @@ exports.handler = async function(event, context) {
 
     return {
       statusCode: 200,
-      body: JSON.stringify({ success: true, message: 'Message sent successfully!', info }),
+      headers,
+      body: JSON.stringify({ 
+        success: true, 
+        message: 'Message sent successfully!',
+        messageId: info.messageId
+      }),
     };
   } catch (error) {
     let errorMessage = 'Failed to send message. Please try again or contact directly via email.';
+    let statusCode = 500;
+    
     if (error instanceof Error) {
-      if (error.message.includes('Invalid login')) {
+      if (error.message.includes('Invalid login') || error.message.includes('authentication')) {
         errorMessage = 'Email configuration error. Please contact directly via email.';
-      } else if (error.message.includes('ECONNREFUSED')) {
+        statusCode = 503;
+      } else if (error.message.includes('ECONNREFUSED') || error.message.includes('ETIMEDOUT')) {
         errorMessage = 'Email server connection failed. Please contact directly via email.';
+        statusCode = 503;
       }
     }
+    
     return {
-      statusCode: 500,
-      body: JSON.stringify({ success: false, message: errorMessage, error: error.message }),
+      statusCode,
+      headers,
+      body: JSON.stringify({ 
+        success: false, 
+        message: errorMessage
+      }),
     };
   }
 };

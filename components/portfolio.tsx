@@ -135,9 +135,11 @@ export function Portfolio() {
             if ((!thumbnailSrc || thumbnailSrc === "") && project.videoUrl) {
               let videoId = "";
               if (project.videoUrl.includes("youtube.com/watch?v=")) {
-                videoId = project.videoUrl.split("v=")[1]?.split("&")[0];
+                const params = project.videoUrl.split("v=")[1];
+                videoId = params ? params.split("&")[0] : "";
               } else if (project.videoUrl.includes("youtu.be/")) {
-                videoId = project.videoUrl.split("youtu.be/")[1]?.split("?")[0];
+                const path = project.videoUrl.split("youtu.be/")[1];
+                videoId = path ? path.split("?")[0] : "";
               }
               if (videoId) {
                 thumbnailSrc = `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`;

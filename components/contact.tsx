@@ -98,20 +98,33 @@ export function Contact() {
     setFormData((prev) => ({ ...prev, projectType: type }))
   }
 
-  const isFormValid = formData.name.trim() && formData.email.trim() && formData.projectType && formData.message.trim()
+  const validateEmail = (email: string): boolean => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+    return emailRegex.test(email)
+  }
+
+  const isFormValid = 
+    formData.name.trim() && 
+    formData.email.trim() && 
+    validateEmail(formData.email) && 
+    formData.projectType && 
+    formData.message.trim()
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
 
-    if (!isFormValid) {
+    if (!formData.name.trim() || !formData.email.trim() || !formData.projectType || !formData.message.trim()) {
       setSubmitError("Please fill in all required fields.")
+      return
+    }
+
+    if (!validateEmail(formData.email)) {
+      setSubmitError("Please enter a valid email address.")
       return
     }
 
     setIsSubmitting(true)
     setSubmitError("")
-
-    console.log("[v0] Form submission started", formData)
 
     try {
       const response = await fetch("/.netlify/functions/sendEmail", {
@@ -123,7 +136,6 @@ export function Contact() {
       })
 
       const result = await response.json()
-      console.log("[v0] Netlify Function response:", result)
 
       if (result.success) {
         setIsSubmitted(true)
@@ -143,8 +155,7 @@ export function Contact() {
         setSubmitError(result.message || "Failed to send message. Please try again.")
       }
     } catch (error) {
-      console.error("Form submission error:", error)
-      setSubmitError("Failed to send message. Please try again.")
+      setSubmitError("Failed to send message. Please try again or contact directly via email.")
     } finally {
       setIsSubmitting(false)
     }
@@ -377,7 +388,7 @@ export function Contact() {
             </Card>
 
             {/* Quick Response Promise */}
-            <Card className="border-0 shadow-lg bg-gradient-to-br from-accent/10 to-accent/5">
+            <Card className="border-0 shadow-lg bg-linear-to-br from-accent/10 to-accent/5">
               <CardContent className="p-6 text-center">
                 <Clock className="h-8 w-8 text-accent mx-auto mb-3" />
                 <h4 className="font-semibold text-foreground mb-2">Quick Response Guarantee</h4>

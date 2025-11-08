@@ -8,18 +8,22 @@ export function LoadingScreen() {
   const [progress, setProgress] = useState(0)
 
   useEffect(() => {
+    let timeoutId: NodeJS.Timeout;
     const timer = setInterval(() => {
       setProgress((prev) => {
         if (prev >= 100) {
           clearInterval(timer)
-          setTimeout(() => setIsLoading(false), 500)
+          timeoutId = setTimeout(() => setIsLoading(false), 500)
           return 100
         }
-        return prev + Math.random() * 15
+        return Math.min(prev + Math.random() * 15, 100)
       })
     }, 100)
 
-    return () => clearInterval(timer)
+    return () => {
+      clearInterval(timer)
+      if (timeoutId) clearTimeout(timeoutId)
+    }
   }, [])
 
   if (!isLoading) return null

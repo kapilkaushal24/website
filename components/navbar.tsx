@@ -22,7 +22,14 @@ export function Navbar() {
   const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId)
     if (element) {
-      element.scrollIntoView({ behavior: "smooth" })
+      const offset = 80; // Account for fixed navbar height
+      const elementPosition = element.getBoundingClientRect().top + window.pageYOffset;
+      const offsetPosition = elementPosition - offset;
+      
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: "smooth"
+      })
       setIsMobileMenuOpen(false)
     }
   }
@@ -37,7 +44,7 @@ export function Navbar() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
-          <div className="flex-shrink-0">
+          <div className="shrink-0">
             <button
               onClick={() => scrollToSection("hero")}
               className="text-xl font-bold text-foreground hover:text-accent transition-colors cursor-pointer"
