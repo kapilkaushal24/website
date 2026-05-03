@@ -85,9 +85,53 @@ const projects: Project[] = [
     tags: ["Documentary", "Community", "Storytelling"],
     client: "City Council",
   },
+  {
+    id: "7",
+    title: "AI Speaker Series",
+    category: "AI Videos",
+    description:
+      "Professional speaker presentation with AI-generated images and visual effects. Explores the intersection of artificial intelligence and communication.",
+    thumbnail: "/ai_speaker_series.png",
+    videoUrl: "https://drive.google.com/file/d/172fBYGNH6jRMETyKzWDs5XfVFKiGXYFS/preview",
+    tags: ["AI", "Educational", "Speaker"],
+    client: "Own",
+  },
+  {
+    id: "8",
+    title: "3D Tracking Demo",
+    category: "AI Videos",
+    description:
+      "Advanced 3D motion tracking demonstration showcasing cutting-edge visual effects and dimensional tracking capabilities for professional applications.",
+    thumbnail: "/3d_tracking_demo.png",
+    videoUrl: "https://drive.google.com/file/d/1AASFXYqYRE5Bg9egPqRJBhiLss751z9-/preview",
+    tags: ["3D", "Visual Effects", "Motion Tracking"],
+    client: "Own",
+  },
+  {
+    id: "9",
+    title: "Business Shorts",
+    category: "Business Shorts",
+    description:
+      "Engaging short-form content designed for business professionals. Quick, impactful videos perfect for social media and professional presentations.",
+    thumbnail: "/business_shorts.png",
+    videoUrl: "https://drive.google.com/file/d/1TZPb7q-8Nh6Ay0aUGQPcYfAN7GBmg7RI/preview",
+    tags: ["Business", "Short Form", "Professional"],
+    client: "Own",
+  },
+  {
+    id: "10",
+    title: "Stock Market Analysis",
+    category: "Business Shorts",
+    description:
+      "Dynamic short video analyzing stock market trends and financial insights. Perfect for finance professionals and investment enthusiasts.",
+    thumbnail: "/stock_market_analysis.png",
+    videoUrl: "https://drive.google.com/file/d/1h28dXzAlAqbypgbGaDhPOx041rbBCN0j/preview",
+    tags: ["Finance", "Analysis", "Market"],
+    client: "Own",
+  },
 ]
 
-const categories = ["All", "Corporate", "YouTube", "Commercial", "Music Video", "Social Media", "Documentary"]
+const categories = ["All", "Corporate", "YouTube", "Commercial", "Music Video", "Social Media", "Documentary", "AI Videos", "Business Shorts"]
 
 export function Portfolio() {
   const [selectedCategory, setSelectedCategory] = useState("All")
@@ -193,19 +237,40 @@ export function Portfolio() {
         {selectedProject && (
           <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm">
             <div className="bg-card rounded-lg max-w-4xl w-full max-h-[90vh] overflow-y-auto">
-              <div className="relative">
+              {/* Modal Header */}
+              <div className="flex items-center justify-between p-6 border-b border-border">
+                <h3 className="text-2xl font-bold text-foreground">{selectedProject.title}</h3>
                 <Button
                   variant="ghost"
                   size="icon"
-                  className="absolute top-4 right-4 z-10 bg-black/50 hover:bg-black/70 text-white"
+                  className="hover:bg-destructive/10 text-destructive"
                   onClick={() => setSelectedProject(null)}
                 >
                   <X className="h-5 w-5" />
                 </Button>
-                <div className="aspect-video bg-black rounded-t-lg flex items-center justify-center">
+              </div>
+
+              {/* Video Player Section */}
+              <div className="relative">
+                <div className="aspect-video bg-black flex items-center justify-center">
                   {/* Video Player */}
                   {(() => {
                     let videoUrl = selectedProject.videoUrl;
+                    
+                    // Handle Google Drive preview URLs
+                    if (videoUrl.includes("drive.google.com/file")) {
+                      return (
+                        <iframe
+                          src={videoUrl}
+                          title={selectedProject.title}
+                          allow="autoplay; encrypted-media"
+                          allowFullScreen
+                          className="w-full h-full"
+                          style={{ border: 'none' }}
+                        />
+                      );
+                    }
+                    
                     // Convert YouTube URLs to embed format
                     if (videoUrl.includes("youtube.com/watch?v=")) {
                       const videoId = videoUrl.split("v=")[1]?.split("&")[0];
@@ -214,6 +279,8 @@ export function Portfolio() {
                       const videoId = videoUrl.split("youtu.be/")[1]?.split("?")[0];
                       videoUrl = `https://www.youtube.com/embed/${videoId}`;
                     }
+                    
+                    // Handle YouTube and Vimeo embeds
                     if (videoUrl.includes("youtube.com/embed") || videoUrl.includes("vimeo.com")) {
                       return (
                         <iframe
@@ -221,29 +288,33 @@ export function Portfolio() {
                           title={selectedProject.title}
                           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                           allowFullScreen
-                          className="w-full h-full rounded-t-lg"
+                          className="w-full h-full"
                         />
                       );
-                    } else {
-                      return (
-                        <video
-                          src={videoUrl}
-                          controls
-                          className="w-full h-full rounded-t-lg"
-                        >
-                          Your browser does not support the video tag.
-                        </video>
-                      );
                     }
+                    
+                    // Handle other video sources
+                    return (
+                      <video
+                        src={videoUrl}
+                        controls
+                        controlsList="nodownload"
+                        className="w-full h-full bg-black"
+                        style={{ objectFit: 'contain' }}
+                      >
+                        Your browser does not support the video tag.
+                      </video>
+                    );
                   })()}
                 </div>
               </div>
+
+              {/* Content Section */}
               <div className="p-8">
                 <div className="flex items-start justify-between mb-6">
                   <div>
-                    <h3 className="text-2xl font-bold text-foreground mb-2">{selectedProject.title}</h3>
                     {selectedProject.client && (
-                      <p className="text-muted-foreground">Client: {selectedProject.client}</p>
+                      <p className="text-muted-foreground mb-2">Client: {selectedProject.client}</p>
                     )}
                   </div>
                   <Badge className="bg-accent text-accent-foreground">{selectedProject.category}</Badge>
