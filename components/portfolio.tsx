@@ -252,7 +252,7 @@ export function Portfolio() {
 
               {/* Video Player Section */}
               <div className="relative">
-                <div className="aspect-video bg-black flex items-center justify-center">
+                <div className="aspect-video bg-black flex items-center justify-center video-player-container">
                   {/* Video Player */}
                   {(() => {
                     let videoUrl = selectedProject.videoUrl;
@@ -260,14 +260,24 @@ export function Portfolio() {
                     // Handle Google Drive preview URLs
                     if (videoUrl.includes("drive.google.com/file")) {
                       return (
-                        <iframe
-                          src={videoUrl}
-                          title={selectedProject.title}
-                          allow="autoplay; encrypted-media"
-                          allowFullScreen
-                          className="w-full h-full"
-                          style={{ border: 'none' }}
-                        />
+                        <div className="w-full h-full relative">
+                          <iframe
+                            src={videoUrl}
+                            title={selectedProject.title}
+                            allow="autoplay; encrypted-media"
+                            allowFullScreen
+                            className="w-full h-full"
+                            style={{ border: 'none' }}
+                          />
+                          <div 
+                            className="absolute top-0 right-0 w-20 h-20"
+                            style={{ 
+                              pointerEvents: 'auto',
+                              background: 'rgb(0, 0, 0)',
+                              zIndex: 50
+                            }}
+                          />
+                        </div>
                       );
                     }
                     
@@ -327,10 +337,6 @@ export function Portfolio() {
                     </Badge>
                   ))}
                 </div>
-                <Button className="bg-accent hover:bg-accent/90 text-accent-foreground">
-                  <ExternalLink className="mr-2 h-4 w-4" />
-                  View Full Project
-                </Button>
               </div>
             </div>
           </div>
