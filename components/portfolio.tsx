@@ -26,7 +26,7 @@ const projects: Project[] = [
     description:
       "A compelling brand narrative showcasing innovation and growth for a leading tech startup. This cinematic piece combines dynamic visuals with powerful storytelling.",
     thumbnail: "/tech-startup-office-cinematic.jpg",
-    videoUrl: "https://example.com/video1",
+    videoUrl: "coming-soon",
     tags: ["Corporate", "Brand Story", "Cinematic"],
     client: "TechFlow Inc.",
   },
@@ -48,7 +48,7 @@ const projects: Project[] = [
     description:
       "High-end fashion commercial showcasing the latest collection with sophisticated cinematography and elegant transitions.",
     thumbnail: "/fashion-commercial-luxury.jpg",
-    videoUrl: "https://example.com/video3",
+    videoUrl: "coming-soon",
     tags: ["Fashion", "Commercial", "Luxury"],
     client: "Elegance Couture",
   },
@@ -59,7 +59,7 @@ const projects: Project[] = [
     description:
       "Creative music video with artistic visual effects and color grading that perfectly complements the artist's unique sound.",
     thumbnail: "/music-video-artistic-lighting.jpg",
-    videoUrl: "https://example.com/video4",
+    videoUrl: "coming-soon",
     tags: ["Music Video", "Creative", "Color Grading"],
     client: "Luna Rivers",
   },
@@ -70,7 +70,7 @@ const projects: Project[] = [
     description:
       "Showcasing my personal growth journey on Instagram (@ranveer.vfx) with creative graphics, eye-catching thumbnails, and advanced video editing. Each post highlights my evolving skills and passion for visual storytelling.",
     thumbnail: "/quiz.jpg",
-    videoUrl: "https://www.instagram.com/reel/DMpNqUTz3yj/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA==",
+    videoUrl: "https://www.instagram.com/reel/DUqNQeoElqx/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA==",
     tags: ["Content", "Social Media", "Reels"],
     client: "Own",
   },
@@ -81,7 +81,7 @@ const projects: Project[] = [
     description:
       "Heartwarming documentary about local community heroes, featuring intimate interviews and compelling narrative structure.",
     thumbnail: "/documentary-interview-community.jpg",
-    videoUrl: "https://example.com/video6",
+    videoUrl: "coming-soon",
     tags: ["Documentary", "Community", "Storytelling"],
     client: "City Council",
   },
@@ -256,6 +256,33 @@ export function Portfolio() {
                   {/* Video Player */}
                   {(() => {
                     let videoUrl = selectedProject.videoUrl;
+                    
+                    // Handle Coming Soon
+                    if (videoUrl === "coming-soon") {
+                      return (
+                        <div className="flex flex-col items-center justify-center w-full h-full">
+                          <p className="text-4xl font-bold text-white">Coming Soon</p>
+                        </div>
+                      );
+                    }
+                    
+                    // Handle Instagram URLs
+                    if (videoUrl.includes("instagram.com")) {
+                      return (
+                        <div className="flex flex-col items-center justify-center w-full h-full gap-4">
+                          <p className="text-2xl font-bold text-white">View on Instagram</p>
+                          <a 
+                            href={videoUrl} 
+                            target="_blank" 
+                            rel="noopener noreferrer"
+                            className="inline-flex items-center gap-2 px-6 py-3 bg-accent hover:bg-accent/90 text-accent-foreground font-semibold rounded-lg transition-colors"
+                          >
+                            <ExternalLink className="h-5 w-5" />
+                            Open Reel
+                          </a>
+                        </div>
+                      );
+                    }
                     
                     // Handle Google Drive preview URLs
                     if (videoUrl.includes("drive.google.com/file")) {
