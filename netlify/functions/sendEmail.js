@@ -59,7 +59,7 @@ exports.handler = async function(event, context) {
       port: 465,
       secure: true,
       auth: {
-        user: 'chatgptt.work@gmail.com',
+        user: process.env.GMAIL_USER,
         pass: process.env.GMAIL_APP_PASSWORD,
       },
     });
@@ -67,8 +67,8 @@ exports.handler = async function(event, context) {
     await transporter.verify();
 
     const mailOptions = {
-      from: 'chatgptt.work@gmail.com',
-      to: 'ranveerwork007@gmail.com',
+      from: process.env.GMAIL_USER,
+      to: process.env.CONTACT_RECIPIENT_EMAIL,
       subject: `New Contact Form Submission: ${subject || projectType}`,
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
