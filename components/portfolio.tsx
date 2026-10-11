@@ -36,7 +36,7 @@ const projects: Project[] = [
     category: "YouTube",
     description:
       "Embark on an epic gaming journey across Iceland’s breathtaking landscapes, featuring thrilling gameplay highlights from both PC and mobile platforms. Experience cross-platform action, immersive storytelling, and stunning visuals as you conquer challenges and level up in this unique adventure.. Features drone cinematography and immersive storytelling.",
-  thumbnail: "",
+    thumbnail: "",
     videoUrl: "https://youtu.be/8ySZ0c-ON6s?si=1Z5UhuB5Omg_HAOt",
     tags: ["Gaming", "YouTube", "PC", "Mobile"],
     client: "Adventure Seekers",
@@ -129,9 +129,94 @@ const projects: Project[] = [
     tags: ["Finance", "Analysis", "Market"],
     client: "Own",
   },
+  {
+    id: "11",
+    title: "Short Video Story",
+    category: "Business Shorts",
+    description:
+      "A punchy, fast-moving short film concept built to capture attention quickly while delivering emotion, pacing, and a memorable visual payoff.",
+    thumbnail: "",
+    videoUrl: "https://youtube.com/shorts/hutWUk7ZSAU",
+    tags: ["Short Form", "Brand Story", "Social Video"],
+    client: "Personal Project",
+  },
+  {
+    id: "12",
+    title: "Documentary Story: Human Connection",
+    category: "Documentary",
+    description:
+      "A documentary-style short that captures emotion, real stories, and cinematic portraiture through intimate framing and thoughtful visual rhythm.",
+    thumbnail: "",
+    videoUrl: "https://youtu.be/-FIKT-yX0hI",
+    tags: ["Documentary", "Storytelling", "Human Stories"],
+    client: "Personal Project",
+  },
 ]
 
 const categories = ["All", "Corporate", "YouTube", "Commercial", "Music Video", "Social Media", "Documentary", "AI Videos", "Business Shorts"]
+
+const workHistory = [
+  {
+    role: "Video Editor",
+    company: "CityDesk Communication LLP",
+    period: "July 2026 – Present",
+    location: "Mohali, India",
+    description:
+      "Leading video editing and content production for client channels, with a focus on storytelling, channel growth, and publish-ready YouTube delivery.",
+  },
+  {
+    role: "Video Editor & Content Creator",
+    company: "Freelance / YouTube Creator",
+    period: "February 2018 – Present",
+    location: "India",
+    description:
+      "Edited 400+ YouTube videos, managed client channels, and created high-performing gaming and entertainment content that reached millions of viewers, including a 3.4M-view viral edit.",
+  },
+  {
+    role: "Visual Effects Artist",
+    company: "Zee Institute of Creative Arts - ZICA",
+    period: "May 2025 – September 2026",
+    location: "Mohali, India",
+    description:
+      "Training in professional VFX and motion graphics while building hands-on expertise in Adobe Premiere Pro, After Effects, and Photoshop for editing, content, and visual storytelling.",
+  },
+  {
+    role: "Creative Video Editor",
+    company: "Ostello",
+    period: "May 2026 – July 2026",
+    location: "Gurugram, Haryana, India",
+    description:
+      "Created branded visual content and short-form edits that aligned with marketing goals and audience engagement strategies.",
+  },
+]
+
+function getYouTubeVideoId(url: string) {
+  if (!url) return ""
+
+  try {
+    const parsedUrl = new URL(url)
+    const hostname = parsedUrl.hostname.replace(/^www\./, "")
+
+    if (hostname === "youtu.be") {
+      return parsedUrl.pathname.split("/").filter(Boolean)[0] || ""
+    }
+
+    if (hostname === "youtube.com" || hostname === "m.youtube.com") {
+      const videoId = parsedUrl.searchParams.get("v")
+      if (videoId) return videoId
+
+      const pathSegments = parsedUrl.pathname.split("/").filter(Boolean)
+      if (pathSegments[0] === "shorts" || pathSegments[0] === "embed") {
+        return pathSegments[1] || ""
+      }
+    }
+  } catch {
+    // Fall back to regex parsing for non-standard URLs.
+  }
+
+  const match = url.match(/(?:youtube\.com\/(?:watch\?v=|shorts\/)|youtu\.be\/)([A-Za-z0-9_-]{11})/)
+  return match?.[1] || ""
+}
 
 export function Portfolio() {
   const [selectedCategory, setSelectedCategory] = useState("All")
@@ -177,22 +262,14 @@ export function Portfolio() {
         {/* Projects Grid */}
         <div className="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
           {filteredProjects.map((project, index) => {
-            // If YouTube link and no thumbnail, use YouTube thumbnail
-            let thumbnailSrc = project.thumbnail;
+            let thumbnailSrc = project.thumbnail
             if ((!thumbnailSrc || thumbnailSrc === "") && project.videoUrl) {
-              let videoId = "";
-              if (project.videoUrl.includes("youtube.com/watch?v=")) {
-                const params = project.videoUrl.split("v=")[1];
-                videoId = params ? params.split("&")[0] : "";
-              } else if (project.videoUrl.includes("youtu.be/")) {
-                const path = project.videoUrl.split("youtu.be/")[1];
-                videoId = path ? path.split("?")[0] : "";
-              }
+              const videoId = getYouTubeVideoId(project.videoUrl)
               if (videoId) {
-                thumbnailSrc = `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`;
+                thumbnailSrc = `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`
               }
             }
-            thumbnailSrc = thumbnailSrc || "/placeholder.svg";
+            thumbnailSrc = thumbnailSrc || "/placeholder.svg"
             return (
               <Card
                 key={project.id}
@@ -236,6 +313,34 @@ export function Portfolio() {
           })}
         </div>
 
+        {/* Work History */}
+        <div className="mt-20 border-t border-white/10 pt-12 md:mt-24 md:pt-16">
+          <div className="mb-10 max-w-2xl">
+            <div className="section-kicker mb-4">Career journey</div>
+            <h3 className="section-title text-balance text-foreground">Work History</h3>
+          </div>
+
+          <div className="grid gap-5 md:grid-cols-2">
+            {workHistory.map((item) => (
+              <Card
+                key={`${item.company}-${item.period}`}
+                className="rounded-md border border-white/10 bg-[#111112] shadow-none transition-colors duration-300 hover:border-accent/50"
+              >
+                <CardContent className="p-6">
+                  <div className="mb-4 flex items-center justify-between gap-3">
+                    <Badge className="bg-accent text-accent-foreground">{item.period}</Badge>
+                    <span className="text-xs uppercase tracking-[0.12em] text-muted-foreground">{item.location}</span>
+                  </div>
+
+                  <h4 className="mb-2 text-xl font-semibold text-foreground">{item.role}</h4>
+                  <p className="mb-4 text-base font-medium text-accent">{item.company}</p>
+                  <p className="text-sm leading-6 text-muted-foreground text-pretty">{item.description}</p>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        </div>
+
         {/* Project Modal */}
         {selectedProject && (
           <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm">
@@ -258,69 +363,54 @@ export function Portfolio() {
                 <div className="aspect-video bg-black flex items-center justify-center video-player-container">
                   {/* Video Player */}
                   {(() => {
-                    let videoUrl = selectedProject.videoUrl;
-                    
-                    // Handle Coming Soon
+                    let videoUrl = selectedProject.videoUrl
+
                     if (videoUrl === "coming-soon") {
                       return (
-                        <div className="flex flex-col items-center justify-center w-full h-full">
+                        <div className="flex h-full w-full flex-col items-center justify-center">
                           <p className="text-4xl font-bold text-white">Coming Soon</p>
                         </div>
-                      );
+                      )
                     }
-                    
-                    // Handle Instagram URLs
+
                     if (videoUrl.includes("instagram.com")) {
                       return (
-                        <div className="flex flex-col items-center justify-center w-full h-full gap-4">
+                        <div className="flex h-full w-full flex-col items-center justify-center gap-4">
                           <p className="text-2xl font-bold text-white">View on Instagram</p>
-                          <a 
-                            href={videoUrl} 
-                            target="_blank" 
+                          <a
+                            href={videoUrl}
+                            target="_blank"
                             rel="noopener noreferrer"
-                            className="inline-flex items-center gap-2 px-6 py-3 bg-accent hover:bg-accent/90 text-accent-foreground font-semibold rounded-lg transition-colors"
+                            className="inline-flex items-center gap-2 rounded-lg bg-accent px-6 py-3 font-semibold text-accent-foreground transition-colors hover:bg-accent/90"
                           >
                             <ExternalLink className="h-5 w-5" />
                             Open Reel
                           </a>
                         </div>
-                      );
+                      )
                     }
-                    
-                    // Handle Google Drive preview URLs
+
                     if (videoUrl.includes("drive.google.com/file")) {
                       return (
-                        <div className="w-full h-full relative">
+                        <div className="relative h-full w-full">
                           <iframe
                             src={videoUrl}
                             title={selectedProject.title}
                             allow="autoplay; encrypted-media"
                             allowFullScreen
-                            className="w-full h-full"
-                            style={{ border: 'none' }}
+                            className="h-full w-full"
+                            style={{ border: "none" }}
                           />
-                          <div 
-                            className="absolute top-0 right-0 w-20 h-20"
-                            style={{ 
-                              pointerEvents: 'auto',
-                              background: 'rgb(0, 0, 0)',
-                              zIndex: 50
-                            }}
-                          />
+                          <div className="absolute right-0 top-0 h-20 w-20" style={{ pointerEvents: "auto", background: "rgb(0, 0, 0)", zIndex: 50 }} />
                         </div>
-                      );
+                      )
                     }
-                    
-                    // Convert YouTube URLs to embed format
-                    if (videoUrl.includes("youtube.com/watch?v=")) {
-                      const videoId = videoUrl.split("v=")[1]?.split("&")[0];
-                      videoUrl = `https://www.youtube.com/embed/${videoId}`;
-                    } else if (videoUrl.includes("youtu.be/")) {
-                      const videoId = videoUrl.split("youtu.be/")[1]?.split("?")[0];
-                      videoUrl = `https://www.youtube.com/embed/${videoId}`;
+
+                    const youtubeVideoId = getYouTubeVideoId(videoUrl)
+                    if (youtubeVideoId) {
+                      videoUrl = `https://www.youtube.com/embed/${youtubeVideoId}`
                     }
-                    
-                    // Handle YouTube and Vimeo embeds
+
                     if (videoUrl.includes("youtube.com/embed") || videoUrl.includes("vimeo.com")) {
                       return (
                         <iframe
@@ -328,23 +418,22 @@ export function Portfolio() {
                           title={selectedProject.title}
                           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                           allowFullScreen
-                          className="w-full h-full"
+                          className="h-full w-full"
                         />
-                      );
+                      )
                     }
-                    
-                    // Handle other video sources
+
                     return (
                       <video
                         src={videoUrl}
                         controls
                         controlsList="nodownload"
-                        className="w-full h-full bg-black"
-                        style={{ objectFit: 'contain' }}
+                        className="h-full w-full bg-black"
+                        style={{ objectFit: "contain" }}
                       >
                         Your browser does not support the video tag.
                       </video>
-                    );
+                    )
                   })()}
                 </div>
               </div>

@@ -48,8 +48,8 @@ const socialLinks = [
   {
     icon: <Youtube className="h-5 w-5" />,
     label: "YouTube",
-    href: "https://www.youtube.com/@toggaming007",
-    username: "@toggaming007",
+    href: "https://youtube.com/@ranveerwork-x5s?si=ISIYgIRCqlmKfzPE",
+    username: "@ranveerwork-x5s",
   },
   {
     icon: <Linkedin className="h-5 w-5" />,
