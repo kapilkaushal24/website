@@ -141,29 +141,32 @@ export function Portfolio() {
     selectedCategory === "All" ? projects : projects.filter((project) => project.category === selectedCategory)
 
   return (
-    <section id="portfolio" className="py-20 bg-muted/30">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section id="portfolio" className="bg-background py-20 md:py-28">
+      <div className="site-container">
         {/* Section Header */}
-        <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4 text-balance">Featured Work</h2>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto text-pretty">
+        <div className="mb-10 flex flex-col justify-between gap-6 md:mb-14 md:flex-row md:items-end">
+          <div>
+            <div className="section-kicker mb-4">Selected projects</div>
+            <h2 className="section-title text-balance text-foreground">Featured Work</h2>
+          </div>
+          <p className="max-w-xl text-base leading-7 text-muted-foreground text-pretty">
             Explore a curated selection of my latest projects, showcasing diverse storytelling approaches and cinematic
             techniques.
           </p>
         </div>
 
         {/* Category Filter */}
-        <div className="flex flex-wrap justify-center gap-2 mb-12">
+        <div className="mb-8 flex flex-wrap gap-2 border-y border-white/10 py-4">
           {categories.map((category) => (
             <Button
               key={category}
               variant={selectedCategory === category ? "default" : "outline"}
               onClick={() => setSelectedCategory(category)}
               className={cn(
-                "rounded-full px-6 py-2 transition-all duration-300",
+                "h-9 rounded-full px-4 text-xs font-semibold transition-all duration-200",
                 selectedCategory === category
                   ? "bg-accent text-accent-foreground hover:bg-accent/90"
-                  : "hover:bg-accent/10 hover:text-accent",
+                  : "border-white/10 bg-transparent text-muted-foreground hover:border-accent/50 hover:bg-white/5 hover:text-foreground",
               )}
             >
               {category}
@@ -172,7 +175,7 @@ export function Portfolio() {
         </div>
 
         {/* Projects Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
           {filteredProjects.map((project, index) => {
             // If YouTube link and no thumbnail, use YouTube thumbnail
             let thumbnailSrc = project.thumbnail;
@@ -194,7 +197,7 @@ export function Portfolio() {
               <Card
                 key={project.id}
                 className={cn(
-                  "group cursor-pointer overflow-hidden border-0 shadow-lg hover:shadow-xl transition-all duration-500 hover:scale-105 bg-card",
+                  "group cursor-pointer overflow-hidden rounded-md border border-white/10 bg-card shadow-none transition-all duration-300 hover:-translate-y-1 hover:border-accent/60 hover:shadow-[0_18px_48px_rgba(0,0,0,0.28)]",
                   "animate-fade-in-up",
                 )}
                 style={{ animationDelay: `${index * 100}ms` }}
@@ -205,7 +208,7 @@ export function Portfolio() {
                     <img
                       src={thumbnailSrc}
                       alt={project.title}
-                      className="w-full h-64 object-cover transition-transform duration-500 group-hover:scale-110"
+                      className="h-64 w-full object-cover transition-transform duration-700 group-hover:scale-105"
                     />
                     <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
                       <Button size="icon" className="bg-accent hover:bg-accent/90 text-accent-foreground rounded-full">
@@ -214,9 +217,9 @@ export function Portfolio() {
                     </div>
                     <Badge className="absolute top-4 left-4 bg-accent text-accent-foreground">{project.category}</Badge>
                   </div>
-                  <div className="p-6">
-                    <h3 className="text-xl font-semibold text-foreground mb-2 text-balance">{project.title}</h3>
-                    <p className="text-muted-foreground text-sm mb-4 text-pretty">
+                  <div className="p-5 md:p-6">
+                    <h3 className="mb-2 text-lg font-semibold text-foreground text-balance">{project.title}</h3>
+                    <p className="mb-4 text-sm leading-6 text-muted-foreground text-pretty">
                       {project.description.substring(0, 100)}...
                     </p>
                     <div className="flex flex-wrap gap-2">
@@ -236,7 +239,7 @@ export function Portfolio() {
         {/* Project Modal */}
         {selectedProject && (
           <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm">
-            <div className="bg-card rounded-lg max-w-4xl w-full max-h-[90vh] overflow-y-auto">
+            <div className="max-h-[90vh] w-full max-w-4xl overflow-y-auto rounded-md border border-white/10 bg-card shadow-2xl">
               {/* Modal Header */}
               <div className="flex items-center justify-between p-6 border-b border-border">
                 <h3 className="text-2xl font-bold text-foreground">{selectedProject.title}</h3>

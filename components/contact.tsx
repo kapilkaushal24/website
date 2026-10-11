@@ -163,9 +163,9 @@ export function Contact() {
 
   if (isSubmitted) {
     return (
-      <section id="contact" className="py-20 bg-background">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <Card className="glass dark:glass-dark border-0 shadow-xl">
+      <section id="contact" className="bg-background py-20 md:py-28">
+          <div className="site-container max-w-4xl">
+            <Card className="rounded-md border border-white/10 bg-[#151516] shadow-none">
             <CardContent className="p-12 text-center">
               <CheckCircle className="h-16 w-16 text-green-500 mx-auto mb-6" />
               <h3 className="text-2xl font-bold text-foreground mb-4">Message Sent Successfully!</h3>
@@ -181,24 +181,25 @@ export function Contact() {
   }
 
   return (
-    <section id="contact" className="py-20 bg-background">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section id="contact" className="bg-background py-20 md:py-28">
+      <div className="site-container">
         {/* Section Header */}
-        <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4 text-balance">
+        <div className="mb-12 max-w-3xl md:mb-16">
+          <div className="section-kicker mb-4">Start a conversation</div>
+          <h2 className="section-title mb-5 text-balance text-foreground">
             Let's Create Something Amazing
           </h2>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto text-pretty">
+          <p className="max-w-2xl text-base leading-7 text-muted-foreground text-pretty">
             Ready to bring your vision to life? Get in touch and let's discuss how we can make your project
             extraordinary.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
+        <div className="grid grid-cols-1 gap-8 md:grid-cols-2 xl:grid-cols-[1.45fr_0.8fr_0.8fr] xl:gap-6">
           {/* Contact Form */}
-          <div className="lg:col-span-2">
-            <Card className="glass dark:glass-dark border-0 shadow-xl">
-              <CardContent className="p-8">
+          <div className="md:col-span-2 xl:col-span-1 xl:row-span-2">
+            <Card className="rounded-md border border-white/10 bg-[#151516] shadow-none">
+              <CardContent className="p-5 sm:p-8">
                 <form onSubmit={handleSubmit} className="space-y-6">
                   {/* Name and Email */}
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -237,8 +238,8 @@ export function Contact() {
                         <Badge
                           key={type}
                           variant={formData.projectType === type ? "default" : "outline"}
-                          className={`cursor-pointer transition-all duration-200 ${
-                            formData.projectType === type ? "bg-accent text-accent-foreground" : "hover:bg-accent/10"
+                          className={`cursor-pointer rounded-full px-4 py-2 transition-all duration-200 ${
+                            formData.projectType === type ? "bg-accent text-accent-foreground" : "border-white/15 text-muted-foreground hover:border-accent/50 hover:bg-white/5 hover:text-foreground"
                           }`}
                           onClick={() => handleProjectTypeSelect(type)}
                         >
@@ -258,7 +259,7 @@ export function Contact() {
                         value={formData.budget}
                         onChange={handleInputChange}
                         placeholder="e.g., $500-1000"
-                        className="bg-background/50"
+                        className="border-white/10 bg-[#101011] focus-visible:ring-accent"
                       />
                     </div>
                     <div className="space-y-2">
@@ -269,7 +270,7 @@ export function Contact() {
                         value={formData.timeline}
                         onChange={handleInputChange}
                         placeholder="e.g., 2 weeks"
-                        className="bg-background/50"
+                        className="border-white/10 bg-[#101011] focus-visible:ring-accent"
                       />
                     </div>
                   </div>
@@ -285,20 +286,20 @@ export function Contact() {
                       placeholder="Tell me about your project, goals, and any specific requirements..."
                       rows={5}
                       required
-                      className="bg-background/50 resize-none"
+                      className="resize-none border-white/10 bg-[#101011] focus-visible:ring-accent"
                     />
                   </div>
 
                   {/* Error Message Display */}
                   {submitError && (
-                    <div className="p-4 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg">
+                    <div className="rounded-sm border border-red-400/25 bg-red-950/30 p-4">
                       <p className="text-red-600 dark:text-red-400 text-sm">{submitError}</p>
                     </div>
                   )}
 
                   {/* Form validation helper text */}
                   {!isFormValid && (
-                    <p className="text-sm text-muted-foreground text-center">
+                    <p className="text-center text-sm text-muted-foreground">
                       Please fill in all required fields: Name, Email, Project Type, and Message
                     </p>
                   )}
@@ -307,7 +308,7 @@ export function Contact() {
                   <Button
                     type="submit"
                     disabled={isSubmitting || !isFormValid}
-                    className={`w-full py-3 text-lg font-semibold transition-all duration-300 ${
+                    className={`h-12 w-full rounded-full text-sm font-bold transition-all duration-300 ${
                       isFormValid && !isSubmitting
                         ? "bg-accent hover:bg-accent/90 text-accent-foreground hover:scale-105 cursor-pointer"
                         : "bg-muted text-muted-foreground cursor-not-allowed"
@@ -331,15 +332,16 @@ export function Contact() {
           </div>
 
           {/* Contact Info & Social */}
-          <div className="space-y-8">
+          <div className="contents">
             {/* Contact Information */}
-            <Card className="border-0 shadow-lg bg-card">
-              <CardContent className="p-6">
-                <h3 className="text-xl font-semibold text-foreground mb-6">Get In Touch</h3>
+              <Card className="rounded-md border border-white/10 bg-[#151516] shadow-none md:col-span-1 xl:col-start-2 xl:row-start-1">
+              <CardContent className="p-5">
+                <h3 className="text-xl font-semibold text-foreground">Get In Touch</h3>
+                <div className="mb-6 mt-3 h-px w-10 bg-accent" />
                 <div className="space-y-4">
                   {contactInfo.map((info) => (
-                    <div key={info.label} className="flex items-center space-x-3">
-                      <div className="p-2 bg-accent/10 rounded-lg text-accent">{info.icon}</div>
+                    <div key={info.label} className="flex items-center gap-3">
+                      <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-accent/20 bg-accent/5 text-accent">{info.icon}</div>
                       <div>
                         <div className="text-sm text-muted-foreground">{info.label}</div>
                         {info.href ? (
@@ -360,9 +362,10 @@ export function Contact() {
             </Card>
 
             {/* Social Media */}
-            <Card className="border-0 shadow-lg bg-card">
-              <CardContent className="p-6">
-                <h3 className="text-xl font-semibold text-foreground mb-6">Follow My Work</h3>
+              <Card className="rounded-md border border-white/10 bg-[#151516] shadow-none md:col-span-1 xl:col-start-3 xl:row-start-1">
+              <CardContent className="p-5">
+                <h3 className="text-xl font-semibold text-foreground">Follow My Work</h3>
+                <div className="mb-4 mt-3 h-px w-10 bg-accent" />
                 <div className="space-y-3">
                   {socialLinks.map((social) => (
                     <a
@@ -370,9 +373,9 @@ export function Contact() {
                       href={social.href}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="flex items-center space-x-3 p-3 rounded-lg hover:bg-accent/10 transition-all duration-200 group"
+                      className="group flex items-center gap-3 border-b border-white/5 py-3 transition-colors duration-200 last:border-0 hover:text-accent"
                     >
-                      <div className="text-muted-foreground group-hover:text-accent transition-colors duration-200">
+                      <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-white/10 bg-black/20 text-accent transition-colors duration-200 group-hover:border-accent/50 group-hover:bg-accent group-hover:text-accent-foreground">
                         {social.icon}
                       </div>
                       <div>
@@ -388,8 +391,8 @@ export function Contact() {
             </Card>
 
             {/* Quick Response Promise */}
-            <Card className="border-0 shadow-lg bg-linear-to-br from-accent/10 to-accent/5">
-              <CardContent className="p-6 text-center">
+              <Card className="rounded-md border border-accent/25 bg-accent/5 py-0 shadow-none md:col-span-2 xl:col-start-2 xl:col-span-2 xl:row-start-2">
+              <CardContent className="p-5 py-4 text-center">
                 <Clock className="h-8 w-8 text-accent mx-auto mb-3" />
                 <h4 className="font-semibold text-foreground mb-2">Quick Response Guarantee</h4>
                 <p className="text-sm text-muted-foreground text-pretty">

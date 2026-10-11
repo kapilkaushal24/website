@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react"
 import { Button } from "@/components/ui/button"
-import { Play, ArrowRight } from "lucide-react"
+import { ArrowRight, Lightbulb, Monitor, Sparkles } from "lucide-react"
 import { cn } from "@/lib/utils"
 
 export function Hero() {
@@ -28,67 +28,50 @@ export function Hero() {
   }
 
   return (
-    <section id="hero" className="relative min-h-screen flex items-center justify-center overflow-hidden">
-      {/* Background Video/Image */}
-      <div className="absolute inset-0 z-0">
-        <div className="absolute inset-0 bg-linear-to-br from-background/80 via-background/60 to-background/80 z-10" />
-        <img src="/cinematic-video-editing-workspace-with-multiple-mo.jpg" alt="Video editing workspace" className="w-full h-full object-cover" />
-      </div>
-
-      {/* Content */}
-      <div className="relative z-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-        <div
-          className={cn(
-            "transition-all duration-1000 ease-out",
-            isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8",
-          )}
-        >
-          <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold text-foreground mb-6 text-balance">
-            Transforming Stories Into <span className="text-accent">Cinematic Visuals</span>
+    <section id="hero" className="relative overflow-hidden bg-background pt-24 md:pt-28">
+      <div className="site-container grid min-h-[calc(100svh-7rem)] items-center gap-6 py-10 lg:grid-cols-[0.95fr_1.05fr] lg:gap-0 lg:py-0">
+        <div className={cn("relative z-10 py-7 transition-all duration-700 md:py-0", isVisible ? "translate-y-0 opacity-100" : "translate-y-6 opacity-0")}>
+          <div className="section-kicker mb-6 flex items-center gap-4 text-xs tracking-[0.22em]">
+            IDEAS <span className="text-muted-foreground">×</span> DESIGN <span className="text-muted-foreground">×</span> IMPACT
+          </div>
+          <h1 className="max-w-[44rem] text-5xl font-extrabold leading-[0.98] text-foreground sm:text-7xl xl:text-[5.5rem]">
+            <span className="block">Creativity</span>
+            <span className="block text-accent">builds better</span>
+            <span className="block">tomorrows<span className="text-accent">.</span></span>
           </h1>
-
-          <p className="text-lg md:text-xl text-muted-foreground mb-8 max-w-3xl mx-auto text-pretty">
-            Professional Video Editing | Reels | YouTube | Cinematic Projects
+          <p className="mt-7 max-w-[34rem] text-base leading-7 text-muted-foreground sm:text-lg">
+            We turn your ideas into powerful visuals, modern brands and digital experiences that leave a mark.
           </p>
-
-          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-            <Button
-              size="lg"
-              className="bg-accent hover:bg-accent/90 text-accent-foreground px-8 py-3 text-lg font-semibold rounded-full transition-all duration-300 hover:scale-105"
-              onClick={() => scrollToSection("portfolio")}
-            >
-              <Play className="mr-2 h-5 w-5" />
-              Watch Reel
+          <div className="mt-8">
+            <Button size="lg" onClick={() => scrollToSection("portfolio")} className="h-13 rounded-full bg-accent px-8 text-sm font-bold uppercase tracking-wide text-accent-foreground hover:bg-accent/90">
+              Explore Our Work <ArrowRight className="ml-3 h-5 w-5" />
             </Button>
-
-            <Button
-              variant="outline"
-              size="lg"
-              className="px-8 py-3 text-lg font-semibold rounded-full border-2 border-accent text-accent hover:bg-accent hover:text-accent-foreground transition-all duration-300 hover:scale-105 bg-transparent"
-              onClick={() => scrollToSection("contact")}
-            >
-              Hire Me
-              <ArrowRight className="ml-2 h-5 w-5" />
-            </Button>
+          </div>
+          <div className="mt-12 grid max-w-[37rem] grid-cols-3 gap-3 sm:mt-16">
+            {[
+              { icon: <Lightbulb className="h-5 w-5" />, label: "Brand Design", detail: "Ideas to identity" },
+              { icon: <Monitor className="h-5 w-5" />, label: "Video Editing", detail: "Stories in motion" },
+              { icon: <Sparkles className="h-5 w-5" />, label: "Creative Assets", detail: "For a digital world" },
+            ].map((item) => (
+              <div key={item.label} className="flex items-start gap-2.5 sm:gap-4">
+                <span className="mt-0.5 shrink-0 text-accent">{item.icon}</span>
+                <span className="min-w-0">
+                  <span className="block text-[0.6rem] font-semibold uppercase tracking-wide text-foreground sm:text-xs">{item.label}</span>
+                  <span className="mt-1 block text-[0.6rem] leading-4 text-muted-foreground sm:text-xs">{item.detail}</span>
+                </span>
+              </div>
+            ))}
           </div>
         </div>
 
-        {/* Scroll Indicator */}
-        <div
-          className={cn(
-            "absolute bottom-8 left-1/2 transform -translate-x-1/2 transition-all duration-1000 delay-500",
-            isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4",
-          )}
-        >
-          <div className="w-6 h-10 border-2 border-accent rounded-full flex justify-center">
-            <div className="w-1 h-3 bg-accent rounded-full mt-2 animate-bounce" />
-          </div>
+        <div className="hero-visual mx-auto w-full max-w-[52rem] lg:mt-2">
+          <img
+            className="hero-reference-image"
+            src="/components/04-hero-artwork-reference.png"
+            alt="Creative collage of a video editor surrounded by visual effects, camera equipment, and ideas"
+          />
         </div>
       </div>
-
-      {/* Floating Elements */}
-      <div className="absolute top-1/4 left-10 w-20 h-20 bg-accent/10 rounded-full blur-xl animate-pulse" />
-      <div className="absolute bottom-1/4 right-10 w-32 h-32 bg-accent/5 rounded-full blur-2xl animate-pulse delay-1000" />
     </section>
   )
 }

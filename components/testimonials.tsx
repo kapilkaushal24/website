@@ -103,25 +103,26 @@ export function Testimonials() {
   }
 
   return (
-    <section id="testimonials" className="py-20 bg-muted/30">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section id="testimonials" className="border-y border-white/5 bg-[#101011] py-20 md:py-28">
+      <div className="site-container">
         {/* Section Header */}
-        <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4 text-balance">What Clients Say</h2>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto text-pretty">
+        <div className="mb-12 max-w-3xl md:mb-16">
+          <div className="section-kicker mb-4">Kind words</div>
+          <h2 className="section-title mb-5 text-balance text-foreground">What Clients Say</h2>
+          <p className="max-w-2xl text-base leading-7 text-muted-foreground text-pretty">
             Don't just take my word for it. Here's what clients have to say about working with me.
           </p>
         </div>
 
         {/* Featured Testimonial */}
-        <div className="mb-16">
-          <Card className="glass dark:glass-dark border-0 shadow-xl max-w-4xl mx-auto">
-            <CardContent className="p-8 md:p-12">
-              <div className="flex items-center justify-center mb-8">
-                <Quote className="h-12 w-12 text-accent opacity-50" />
+        <div className="mb-14">
+          <Card className="mx-auto max-w-5xl rounded-md border border-white/10 border-l-2 border-l-accent bg-[#151516] shadow-none">
+            <CardContent className="p-6 md:p-12">
+              <div className="mb-6 flex items-center justify-center md:mb-8">
+                <Quote className="h-10 w-10 text-accent opacity-70" />
               </div>
 
-              <blockquote className="text-xl md:text-2xl text-center text-foreground mb-8 text-pretty font-medium leading-relaxed">
+              <blockquote className="mb-8 text-center text-xl font-medium leading-relaxed text-foreground text-pretty md:text-2xl">
                 "{testimonials[currentIndex].content}"
               </blockquote>
 
@@ -160,8 +161,8 @@ export function Testimonials() {
                   setCurrentIndex(index)
                   setIsAutoPlaying(false)
                 }}
-                className={cn(
-                  "w-3 h-3 rounded-full transition-all duration-300",
+                  className={cn(
+                    "h-2.5 w-2.5 rounded-full transition-all duration-300",
                   index === currentIndex
                     ? "bg-accent scale-125"
                     : "bg-muted-foreground/30 hover:bg-muted-foreground/50",
@@ -173,17 +174,17 @@ export function Testimonials() {
         </div>
 
         {/* Testimonials Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
           {testimonials.map((testimonial, index) => (
             <Card
               key={testimonial.id}
               className={cn(
-                "border-0 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 bg-card",
+                "rounded-md border border-white/10 bg-card shadow-none transition-colors duration-300 hover:border-accent/40",
                 "animate-fade-in-up",
               )}
               style={{ animationDelay: `${index * 100}ms` }}
             >
-              <CardContent className="p-6">
+              <CardContent className="p-5 md:p-6">
                 <div className="flex items-center mb-4 space-x-1">{renderStars(testimonial.rating)}</div>
 
                 <p className="text-muted-foreground mb-4 text-pretty text-sm leading-relaxed">

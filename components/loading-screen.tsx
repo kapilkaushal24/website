@@ -8,21 +8,12 @@ export function LoadingScreen() {
   const [progress, setProgress] = useState(0)
 
   useEffect(() => {
-    let timeoutId: NodeJS.Timeout;
-    const timer = setInterval(() => {
-      setProgress((prev) => {
-        if (prev >= 100) {
-          clearInterval(timer)
-          timeoutId = setTimeout(() => setIsLoading(false), 500)
-          return 100
-        }
-        return Math.min(prev + Math.random() * 15, 100)
-      })
-    }, 100)
+    const progressTimer = window.setTimeout(() => setProgress(100), 40)
+    const dismissalTimer = window.setTimeout(() => setIsLoading(false), 180)
 
     return () => {
-      clearInterval(timer)
-      if (timeoutId) clearTimeout(timeoutId)
+      window.clearTimeout(progressTimer)
+      window.clearTimeout(dismissalTimer)
     }
   }, [])
 
@@ -36,11 +27,11 @@ export function LoadingScreen() {
       )}
     >
       <div className="text-center">
-        <div className="w-16 h-16 bg-accent rounded-lg flex items-center justify-center mb-6 mx-auto animate-pulse-slow">
-          <span className="text-accent-foreground font-bold text-xl">RK</span>
+        <div className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-full border-2 border-accent animate-pulse-slow">
+          <span className="h-4 w-4 rounded-full bg-accent" />
         </div>
 
-        <h2 className="text-2xl font-bold text-foreground mb-4">Ranveer Kaushal</h2>
+        <h2 className="mb-4 text-2xl font-bold text-foreground">ranveer<span className="text-accent">.vfx</span></h2>
         <p className="text-muted-foreground mb-8">Loading portfolio...</p>
 
         <div className="w-64 h-2 bg-muted rounded-full overflow-hidden mx-auto">

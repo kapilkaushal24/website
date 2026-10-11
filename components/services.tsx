@@ -69,31 +69,32 @@ export function Services() {
   }
 
   return (
-    <section id="services" className="py-20 bg-background">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section id="services" className="border-y border-white/5 bg-[#101011] py-20 md:py-28">
+      <div className="site-container">
         {/* Section Header */}
-        <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4 text-balance">Services & Expertise</h2>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto text-pretty">
+        <div className="mb-12 max-w-3xl md:mb-16">
+          <div className="section-kicker mb-4">What I do</div>
+          <h2 className="section-title mb-5 text-balance text-foreground">Services & Expertise</h2>
+          <p className="max-w-2xl text-base leading-7 text-muted-foreground text-pretty">
             From quick social media edits to cinematic masterpieces, I offer comprehensive video editing services
             tailored to your needs.
           </p>
         </div>
 
         {/* Services Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
           {services.map((service, index) => (
             <Card
               key={service.title}
               className={cn(
-                "group relative overflow-hidden border-0 shadow-lg hover:shadow-xl transition-all duration-500 hover:scale-105 glass dark:glass-dark",
+                "group relative overflow-hidden rounded-md border border-white/10 bg-[#151516] shadow-none transition-all duration-300 hover:-translate-y-1 hover:border-accent/50",
                 "animate-fade-in-up",
               )}
               style={{ animationDelay: `${index * 100}ms` }}
             >
               <CardContent className="p-8">
                 <div className="flex items-center mb-6">
-                  <div className="p-3 bg-accent/10 rounded-lg text-accent group-hover:bg-accent group-hover:text-accent-foreground transition-all duration-300">
+                  <div className="rounded-sm border border-accent/30 bg-accent/5 p-3 text-accent transition-colors duration-300 group-hover:bg-accent group-hover:text-accent-foreground">
                     {service.icon}
                   </div>
                   <div className="ml-4">
@@ -125,19 +126,21 @@ export function Services() {
         </div>
 
         {/* CTA Section */}
-        <div className="text-center mt-16">
-          <div className="glass dark:glass-dark rounded-2xl p-8 md:p-12">
+        <div className="mt-14 border-t border-white/10 pt-12 md:mt-20 md:pt-16">
+          <div className="flex flex-col items-start justify-between gap-8 md:flex-row md:items-center">
+            <div>
             <h3 className="text-2xl md:text-3xl font-bold text-foreground mb-4 text-balance">
               Ready to Transform Your Vision?
             </h3>
-            <p className="text-lg text-muted-foreground mb-8 max-w-2xl mx-auto text-pretty">
+            <p className="max-w-2xl text-base leading-7 text-muted-foreground text-pretty">
               Let's discuss your project and create something extraordinary together. Every story deserves to be told
               beautifully.
             </p>
+            </div>
             <Button
               size="lg"
               onClick={scrollToContact}
-              className="bg-accent hover:bg-accent/90 text-accent-foreground px-8 py-3 text-lg font-semibold rounded-full transition-all duration-300 hover:scale-105"
+              className="h-12 shrink-0 rounded-full bg-accent px-7 text-sm font-bold text-accent-foreground hover:bg-accent/90"
             >
               Start Your Project
             </Button>

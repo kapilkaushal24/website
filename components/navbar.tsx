@@ -2,20 +2,37 @@
 
 import { useState, useEffect } from "react"
 import { Button } from "@/components/ui/button"
-import { Moon, Sun, Menu, X } from "lucide-react"
-import { useTheme } from "next-themes"
+import { ArrowUpRight, Menu, X } from "lucide-react"
 import { cn } from "@/lib/utils"
+
+const navigationLinks = [
+  { name: "Home", id: "hero" },
+  { name: "About", id: "about" },
+  { name: "Services", id: "services" },
+  { name: "Works", id: "portfolio" },
+  { name: "Blog", id: "blog", hidden: true },
+  { name: "Contact", id: "contact" },
+]
 
 export function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
-  const { theme, setTheme } = useTheme()
+  const [activeSection, setActiveSection] = useState("hero")
 
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 50)
+
+      for (const item of navigationLinks) {
+        if (item.hidden) continue
+        const section = document.getElementById(item.id)
+        if (section && section.getBoundingClientRect().top <= 120) {
+          setActiveSection(item.id)
+        }
+      }
     }
     window.addEventListener("scroll", handleScroll)
+    handleScroll()
     return () => window.removeEventListener("scroll", handleScroll)
   }, [])
 
@@ -35,95 +52,66 @@ export function Navbar() {
   }
 
   return (
-    <nav
-      className={cn(
-        "fixed top-0 left-0 right-0 z-50 transition-all duration-300",
-        isScrolled ? "glass dark:glass-dark shadow-lg" : "bg-transparent",
-      )}
-    >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16">
-          {/* Logo */}
-          <div className="shrink-0">
+    <nav className={cn("fixed inset-x-0 top-0 z-50 border-b border-white/5 transition-colors duration-300", isScrolled ? "bg-[#141414]/95 backdrop-blur-xl" : "bg-[#1b1b1b] backdrop-blur-md")}>
+      <div className="site-container flex h-[108px] items-center justify-between gap-4">
+        <button onClick={() => scrollToSection("hero")} className="flex shrink-0 items-center gap-2.5 text-foreground" aria-label="ranveer.vfx home">
+          <span className="brand-mark h-10 w-10" aria-hidden="true"><span /></span>
+          <span className="text-xl font-bold">ranveer<span className="text-accent">.vfx</span></span>
+        </button>
+
+        <div className="hidden items-center gap-8 lg:flex lg:gap-10">
+          {navigationLinks.map((item) => (
             <button
-              onClick={() => scrollToSection("hero")}
-              className="text-xl font-bold text-foreground hover:text-accent transition-colors cursor-pointer"
+              key={item.id}
+              onClick={() => scrollToSection(item.id)}
+              hidden={item.hidden || undefined}
+              aria-hidden={item.hidden || undefined}
+              tabIndex={item.hidden ? -1 : 0}
+              className={cn("nav-link py-2 text-xs font-semibold uppercase tracking-[0.12em]", activeSection === item.id && "nav-link-active", item.hidden && "hidden")}
             >
-              Ranveer Kaushal
+              {item.name}
             </button>
-          </div>
-
-          {/* Desktop Navigation */}
-          <div className="hidden md:block">
-            <div className="ml-10 flex items-baseline space-x-8">
-              {[
-                { name: "Home", id: "hero" },
-                { name: "Portfolio", id: "portfolio" },
-                { name: "Services", id: "services" },
-                { name: "About", id: "about" },
-                { name: "Contact", id: "contact" },
-              ].map((item) => (
-                <button
-                  key={item.name}
-                  onClick={() => scrollToSection(item.id)}
-                  className="text-foreground hover:text-accent px-3 py-2 text-sm font-medium transition-colors cursor-pointer"
-                >
-                  {item.name}
-                </button>
-              ))}
-            </div>
-          </div>
-
-          {/* Theme Toggle & Mobile Menu */}
-          <div className="flex items-center space-x-4">
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-              className="text-foreground hover:text-accent"
-            >
-              <Sun className="h-5 w-5 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
-              <Moon className="absolute h-5 w-5 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
-              <span className="sr-only">Toggle theme</span>
-            </Button>
-
-            {/* Mobile menu button */}
-            <div className="md:hidden">
-              <Button
-                variant="ghost"
-                size="icon"
-                onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                className="text-foreground hover:text-accent"
-              >
-                {isMobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
-              </Button>
-            </div>
-          </div>
+          ))}
         </div>
 
-        {/* Mobile Navigation */}
-        {isMobileMenuOpen && (
-          <div className="md:hidden">
-            <div className="px-2 pt-2 pb-3 space-y-1 glass dark:glass-dark rounded-lg mt-2">
-              {[
-                { name: "Home", id: "hero" },
-                { name: "Portfolio", id: "portfolio" },
-                { name: "Services", id: "services" },
-                { name: "About", id: "about" },
-                { name: "Contact", id: "contact" },
-              ].map((item) => (
-                <button
-                  key={item.name}
-                  onClick={() => scrollToSection(item.id)}
-                  className="text-foreground hover:text-accent block px-3 py-2 text-base font-medium w-full text-left transition-colors cursor-pointer"
-                >
-                  {item.name}
-                </button>
-              ))}
-            </div>
-          </div>
-        )}
+        <div className="flex shrink-0 items-center gap-2">
+          <Button onClick={() => scrollToSection("contact")} className="hidden h-11 rounded-full border border-accent bg-transparent px-5 text-xs font-semibold uppercase tracking-wider text-foreground shadow-none hover:bg-accent hover:text-accent-foreground sm:inline-flex">
+            Let&apos;s Talk <span className="ml-1.5 h-2 w-2 rounded-full bg-accent" />
+          </Button>
+          <Button
+            variant="ghost"
+            size="icon"
+            className="text-foreground hover:bg-white/10 hover:text-accent lg:hidden"
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            aria-label={isMobileMenuOpen ? "Close menu" : "Open menu"}
+            aria-expanded={isMobileMenuOpen}
+          >
+            {isMobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+          </Button>
+        </div>
       </div>
+
+      {isMobileMenuOpen && (
+        <div className="border-t border-white/10 bg-background px-4 pb-5 pt-3 lg:hidden">
+          <div className="site-container flex flex-col">
+            {navigationLinks.map((item) => (
+              <button
+                key={item.id}
+                onClick={() => scrollToSection(item.id)}
+                hidden={item.hidden || undefined}
+                aria-hidden={item.hidden || undefined}
+                tabIndex={item.hidden ? -1 : 0}
+                className={cn("border-b border-white/5 py-3 text-left text-sm font-medium uppercase tracking-wider text-foreground", item.hidden && "hidden")}
+              >
+                {item.name}
+              </button>
+            ))}
+            <button onClick={() => scrollToSection("contact")} className="mt-4 flex items-center gap-2 self-start text-sm font-semibold uppercase text-accent">
+              Let&apos;s Talk <ArrowUpRight className="h-4 w-4" />
+            </button>
+          </div>
+        </div>
+      )}
     </nav>
   )
 }

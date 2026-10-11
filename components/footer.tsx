@@ -1,7 +1,7 @@
 "use client"
 
 import { Button } from "@/components/ui/button"
-import { Instagram, Youtube, Linkedin, Twitter, Mail, Phone, ArrowUp } from "lucide-react"
+import { Instagram, Youtube, Linkedin, Twitter, Mail, Phone, MapPin, ArrowUp } from "lucide-react"
 
 const socialLinks = [
   { icon: <Instagram className="h-5 w-5" />, href: "https://www.instagram.com/ranveer.vfx", label: "Instagram" },
@@ -41,30 +41,29 @@ export function Footer() {
   }
 
   return (
-    <footer className="bg-muted/30 border-t border-border/50">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <footer className="border-t border-white/10 bg-[#101011]">
+      <div className="site-container">
         {/* Main Footer Content */}
-        <div className="py-16 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div className="grid grid-cols-1 gap-10 py-14 md:grid-cols-2 lg:grid-cols-4 lg:gap-8">
           {/* Brand Section */}
           <div className="lg:col-span-1">
             <div className="flex items-center space-x-2 mb-4">
-              <div className="w-8 h-8 bg-accent rounded-lg flex items-center justify-center">
-                <span className="text-accent-foreground font-bold text-sm">RK</span>
-              </div>
-              <span className="text-xl font-bold text-foreground">Ranveer Kaushal</span>
+              <span className="brand-mark" aria-hidden="true"><span /></span>
+              <span className="text-xl font-bold text-foreground">ranveer<span className="text-accent">.vfx</span></span>
             </div>
             <p className="text-muted-foreground mb-6 text-pretty">
               Professional video editor and aspiring VFX artist crafting compelling visual stories that resonate with
               audiences and drive results.
             </p>
-            <div className="flex space-x-3">
+            <h3 className="mb-3 text-[0.65rem] font-semibold uppercase tracking-[0.18em] text-muted-foreground">Follow My Work</h3>
+            <div className="flex flex-wrap gap-2">
               {socialLinks.map((social) => (
                 <a
                   key={social.label}
                   href={social.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="p-2 bg-background rounded-lg hover:bg-accent hover:text-accent-foreground transition-all duration-200 text-muted-foreground cursor-pointer"
+                  className="flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-transparent text-muted-foreground transition-all duration-200 hover:border-accent/60 hover:bg-accent/10 hover:text-accent"
                   aria-label={social.label}
                 >
                   {social.icon}
@@ -105,27 +104,29 @@ export function Footer() {
           {/* Contact Info */}
           <div>
             <h3 className="text-lg font-semibold text-foreground mb-4">Get In Touch</h3>
-            <div className="space-y-3">
+            <div className="space-y-1">
               <a
                 href="mailto:ranveerwork007@gmail.com"
-                className="flex items-center space-x-2 text-muted-foreground hover:text-accent transition-colors duration-200 cursor-pointer"
+                className="flex items-center gap-3 border-b border-white/5 py-3 text-sm text-muted-foreground transition-colors duration-200 hover:text-accent"
               >
                 <Mail className="h-4 w-4" />
                 <span>ranveerwork007@gmail.com</span>
               </a>
               <a
                 href="tel:+918091783736"
-                className="flex items-center space-x-2 text-muted-foreground hover:text-accent transition-colors duration-200 cursor-pointer"
+                className="flex items-center gap-3 border-b border-white/5 py-3 text-sm text-muted-foreground transition-colors duration-200 hover:text-accent"
               >
                 <Phone className="h-4 w-4" />
                 <span>+91 80917 83736</span>
               </a>
-              <div className="text-muted-foreground">Chandigarh, India</div>
+              <div className="flex items-center gap-3 py-3 text-sm text-muted-foreground">
+                <MapPin className="h-4 w-4 text-accent" /> Chandigarh, India
+              </div>
             </div>
 
             <Button
               onClick={() => scrollToSection("#contact")}
-              className="mt-4 bg-accent hover:bg-accent/90 text-accent-foreground"
+              className="mt-4 h-11 rounded-full bg-accent px-5 text-xs font-bold uppercase tracking-wide text-accent-foreground hover:bg-accent/90"
             >
               Start Project
             </Button>
@@ -133,7 +134,7 @@ export function Footer() {
         </div>
 
         {/* Bottom Footer */}
-        <div className="py-6 border-t border-border/50 flex flex-col md:flex-row items-center justify-between">
+        <div className="flex flex-col items-center justify-between gap-4 border-t border-white/10 py-6 md:flex-row">
           <div className="text-muted-foreground text-sm mb-4 md:mb-0">
             © {new Date().getFullYear()} Ranveer Kaushal. All rights reserved. Crafted with passion for visual storytelling.
           </div>
@@ -145,6 +146,7 @@ export function Footer() {
               variant="outline"
               size="sm"
               className="border-border/50 hover:bg-accent hover:text-accent-foreground hover:border-accent bg-transparent"
+              aria-label="Back to top"
             >
               <ArrowUp className="h-4 w-4" />
             </Button>
